@@ -1,0 +1,19 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "MERN (MongoDB, Express.js, React, Node.js) Authentication project, designed following industry best practices and utilizing JSON Web Tokens (JWT) for secure user authentication.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "server": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samcasmmm/best-auth-mern.git"
+  },
+  "author": "sameer bagwan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/samcasmmm/best-auth-mern/issues"
+  }
+}

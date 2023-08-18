@@ -5,9 +5,11 @@ dotenv.config();
 
 // file imports
 import connectDB from './config/database.js';
+import userRoutes from './routes/userRoutes.js';
 
 // middleware
 const app = express();
+app.use(express.json());
 
 // route
 app.get('/', (req, res) => {
@@ -16,6 +18,8 @@ app.get('/', (req, res) => {
     statusCode: res.statusCode,
   });
 });
+
+app.use('/api/v1/user', userRoutes);
 
 // listening server
 const startServer = async () => {

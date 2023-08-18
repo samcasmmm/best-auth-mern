@@ -8,7 +8,7 @@ const Navbar = () => {
     { id: 4, title: 'Profile', path: '/profile' },
   ];
   return (
-    <nav className='bg-gray-800 p-4'>
+    <nav className='bg-gray-800 p-4 fixed top-0 w-full'>
       <div className='flex items-center justify-between'>
         <div className='text-white font-semibold text-lg'>Logo</div>
         <div className=' md:flex space-x-4' id='navLinks'>

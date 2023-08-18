@@ -10,6 +10,12 @@ import connectDB from './config/database.js';
 const app = express();
 
 // route
+app.get('/', (req, res) => {
+  res.json({
+    status: 'Server is running',
+    statusCode: res.statusCode,
+  });
+});
 
 // listening server
 const startServer = async () => {

@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
   });
 });
 
-app.use('/api/v2/user', userRoutes);
+app.use('/api/v2/users', userRoutes);
 
 // error middlewares
 

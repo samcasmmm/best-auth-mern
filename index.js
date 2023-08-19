@@ -5,6 +5,11 @@ dotenv.config();
 
 // file imports
 import connectDB from './config/database.js';
+import {
+  notFoundMiddleware,
+  errorMiddleware,
+} from './middlewares/errorMiddleware.js';
+import userRoutes from './routes/userRoutes.js';
 
 // middleware
 const app = express();
@@ -18,7 +23,14 @@ app.get('/', (req, res) => {
   });
 });
 
-// listening server
+app.use('/api/v2/user', userRoutes);
+
+// error middlewares
+
+app.use(notFoundMiddleware);
+app.use(errorMiddleware);
+
+//  listening server
 const startServer = async () => {
   try {
     connectDB(process.env.MONGODB_URL);

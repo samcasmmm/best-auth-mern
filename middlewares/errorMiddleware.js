@@ -1,23 +1,21 @@
-const errorMiddleware = (err, req, res, next) => {
-  console.log(err);
-  const defaultErrors = {
-    statusCode: 500,
-    message: err,
-  };
-
-  if (err.name === 'ValidationError') {
-    defaultErrors.statusCode = 400;
-    defaultErrors.message = Object.values(err.errors)
-      .map((item) => item.message)
-      .join(',');
-  }
-
-  if (err.name === 'MongoServerError' && err.code === 11000) {
-    defaultErrors.statusCode = 400;
-    defaultErrors.message = 'Username or email already exists';
-  }
-
-  res.status(defaultErrors.statusCode).json(defaultErrors.message || err);
+const notFoundMiddleware = (req, res, next) => {
+  const error = new Error(`Not Found - ${req.originalUrl}`);
+  res.status(404);
+  next(error);
 };
 
-export default errorMiddleware;
+const errorMiddleware = (err, req, res, next) => {
+  let statusCode = res.statusCode === 200 ? 500 : res.statusCode;
+  let message = err.message;
+  if (err.name === 'CastError' && err.kind === 'ObjectId') {
+    statusCode = 404;
+    message = 'Resource not found';
+  }
+
+  res.status(statusCode).json({
+    message,
+    stack: process.env.NODE_ENV === 'production' ? null : err.stack,
+  });
+};
+
+export { notFoundMiddleware, errorMiddleware };

@@ -3,12 +3,19 @@ import User from '../models/userSchema.js';
 export const registerController = async (req, res, next) => {
   const { username, email, password } = req.body;
   if (!username || !email || !password) {
-    next('Please provide username, email, and password');
+    return next({
+      message: 'Please provide username, email, and password',
+      status: 'Failed',
+    });
   }
 
-  const existingUser = await User.findOne({ email });
+  const existingUser = await User.findOne({ $or: [{ email }, { username }] });
+
   if (existingUser) {
-    next('User already exists');
+    return next({
+      message: 'User already Exist',
+      status: 'Success',
+    });
   }
 
   if (password?.length <= 6) {
@@ -22,8 +29,7 @@ export const registerController = async (req, res, next) => {
   const { password: _password, ...user } = newUser._doc;
   res.status(201).send({
     message: 'User Created Successfully',
-    success: true,
-    status: res.statusCode,
+    status: 'Success',
     user,
   });
 };

@@ -12,16 +12,12 @@ const errorMiddleware = (err, req, res, next) => {
       .join(',');
   }
 
-  if (err.code && err.code === 11000) {
+  if (err.name === 'MongoServerError' && err.code === 11000) {
     defaultErrors.statusCode = 400;
-    defaultErrors.message = `${Object.key(
-      err.keyValue
-    )} Field has to be unique`;
+    defaultErrors.message = 'Username or email already exists';
   }
 
-  res
-    .status(defaultErrors.statusCode)
-    .json({ message: defaultErrors.message || err });
+  res.status(defaultErrors.statusCode).json(defaultErrors.message || err);
 };
 
 export default errorMiddleware;

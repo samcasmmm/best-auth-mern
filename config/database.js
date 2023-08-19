@@ -2,13 +2,14 @@ import mongoose from 'mongoose';
 
 const connectDB = async (url) => {
   mongoose.set('strictQuery', true);
-  mongoose
+  await mongoose
     .connect(url)
     .then(() => {
       console.log('MongoDB Connected');
     })
     .catch((error) => {
       console.log('MongoDB error', error);
+      process.exit(1);
     });
 };
 

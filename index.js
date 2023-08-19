@@ -14,6 +14,7 @@ import userRoutes from './routes/userRoutes.js';
 // middleware
 const app = express();
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // route
 app.get('/', (req, res) => {

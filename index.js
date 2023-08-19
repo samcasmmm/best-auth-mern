@@ -6,6 +6,8 @@ dotenv.config();
 // file imports
 import connectDB from './config/database.js';
 import userRoutes from './routes/userRoutes.js';
+import authRoutes from './routes/authRoutes.js';
+import authMiddleware from './middlewares/authMiddleware.js';
 
 // middleware
 const app = express();
@@ -20,6 +22,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/v1/user', userRoutes);
+app.use('/api/v1/auth', authRoutes);
 
 // listening server
 const startServer = async () => {

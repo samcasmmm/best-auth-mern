@@ -5,8 +5,24 @@ import User from './../models/userSchema.js';
 // ? @desc   -  Auth user/set token
 // ? route   -  POST /api/users/auth
 // ? @access -  Public
-const authUser = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: 'Auth User' });
+const authUser = asyncHandler(async (req, res, next) => {
+  const { username, email, password } = req.body;
+  const user = await User.findOne({ email });
+  // const { password: _password, ...newUser } = user;
+  console.log(user);
+  const isMatched = await user.matchPassword(password);
+
+  if (user && isMatched) {
+    const token = generateToken(res, user._id);
+    res.status(200).send({
+      message: 'User Logged In',
+      status: 'success',
+      data: user,
+      token: token,
+    });
+  } else {
+    res.status(200).json({ message: 'Invalid Credential' });
+  }
 });
 
 // ? @desc   -  Register new User
@@ -16,15 +32,15 @@ const registerUser = asyncHandler(async (req, res, next) => {
   const { username, email, password } = req.body;
   const userExists = await User.findOne({ username } && { email });
   if (userExists) {
-    next({
+    return next({
       message: 'User already exists',
       status: 'Bad request',
     });
   }
   const user = await User.create({ username, email, password });
-  const token = generateToken(res, user._id);
   const { password: _password, ...newUser } = user._doc;
   if (user) {
+    const token = generateToken(res, user._id);
     res.status(201).send({
       message: 'A new user created',
       status: 'success',

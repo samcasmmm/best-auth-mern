@@ -6,18 +6,20 @@ import User from './../models/userSchema.js';
 // ? route   -  POST /api/users/auth
 // ? @access -  Public
 const authUser = asyncHandler(async (req, res, next) => {
-  const { username, email, password } = req.body;
+  const { email, password } = req.body;
   const user = await User.findOne({ email });
   // const { password: _password, ...newUser } = user;
   console.log(user);
   const isMatched = await user.matchPassword(password);
 
   if (user && isMatched) {
+    user.password = undefined;
+    const { _password: password, ...userWithoutPassword } = user._doc;
     const token = generateToken(res, user._id);
     res.status(200).send({
       message: 'User Logged In',
       status: 'success',
-      data: user,
+      data: userWithoutPassword,
       token: token,
     });
   } else {
@@ -54,6 +56,10 @@ const registerUser = asyncHandler(async (req, res, next) => {
 // ? route   -  POST /api/users/logout
 // ? @access -  Public
 const logoutUser = asyncHandler(async (req, res) => {
+  res.cookie('jwt', '', {
+    httpOnly: true,
+    expires: new Date(0),
+  });
   res.status(200).json({ message: 'Logout User' });
 });
 

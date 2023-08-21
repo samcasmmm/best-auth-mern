@@ -19,7 +19,7 @@ const authUser = asyncHandler(async (req, res, next) => {
     res.status(200).send({
       message: 'User Logged In',
       status: 'success',
-      data: userWithoutPassword,
+      user: userWithoutPassword,
       token: token,
     });
   } else {
@@ -46,7 +46,7 @@ const registerUser = asyncHandler(async (req, res, next) => {
     res.status(201).send({
       message: 'A new user created',
       status: 'success',
-      data: newUser,
+      user: newUser,
       token: token,
     });
   }
@@ -67,13 +67,29 @@ const logoutUser = asyncHandler(async (req, res) => {
 // ? route   -  GET /api/users/profile
 // ? @access -  Private
 const getUserProfile = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: 'User Profile' });
+  console.log(req.user);
+  const user = {
+    _id: req.user._id,
+    username: req.user.username,
+    email: req.user.email,
+  };
+
+  res.status(200).json({ message: 'User Profile', user });
 });
 
 // ? @desc   -  Update user profile
 // ? route   -  PUT /api/users/profile
 // ? @access -  Private
-const updateUserProfile = asyncHandler(async (req, res) => {
+const updateUserProfile = asyncHandler(async (req, res, next) => {
+  const user = await User.findById(req.user._id);
+  if (user) {
+  } else {
+    res.status(404);
+    next({
+      message: 'User not found',
+      status: 404,
+    });
+  }
   res.status(200).json({ message: 'Update User' });
 });
 

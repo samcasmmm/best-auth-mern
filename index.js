@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 import cookieParser from 'cookie-parser';
 
-// file imports
+// file imports -
 import connectDB from './config/database.js';
 import {
   notFoundMiddleware,

@@ -1,5 +1,7 @@
 const SignIn = () => {
-  return <div>SignIn</div>;
+  return (
+    <div className='flex items-center justify-center h-[86.7vh]'>SignIn</div>
+  );
 };
 
 export default SignIn;

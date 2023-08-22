@@ -39,11 +39,17 @@ const registerUser = asyncHandler(async (req, res, next) => {
       status: 'Bad request',
     });
   }
+  if (password.length <= 5) {
+    return res.status(401).json({
+      message: 'password must be more than 5 charactor',
+      status: 'User Bad request',
+    });
+  }
   const user = await User.create({ username, email, password });
   const { password: _password, ...newUser } = user._doc;
   if (user) {
     const token = generateToken(res, user._id);
-    res.status(201).send({
+    return res.status(201).send({
       message: 'A new user created',
       status: 'success',
       user: newUser,

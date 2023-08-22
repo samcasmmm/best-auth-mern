@@ -1,12 +1,14 @@
 {
   "name": "server",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "MERN (MongoDB, Express.js, React, Node.js) Authentication project, designed following industry best practices and utilizing JSON Web Tokens (JWT) for secure user authentication.",
   "main": "index.js",
   "type": "module",
   "scripts": {
     "start": "node index.js",
-    "server": "nodemon index.js"
+    "server": "nodemon index.js",
+    "client": "npm run dev --prefix ./views",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",
@@ -27,5 +29,8 @@
     "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^9.0.1",
     "mongoose": "^7.4.3"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.1"
   }
 }

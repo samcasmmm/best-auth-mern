@@ -74,7 +74,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
     email: req.user.email,
   };
 
-  res.status(200).json({ message: 'User Profile', user });
+  res.status(200).json({ message: 'User Profile', status: 'success', user });
 });
 
 // ? @desc   -  Update user profile

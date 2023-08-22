@@ -10,7 +10,7 @@ const Navbar = () => {
     { id: 4, title: 'Profile', path: '/profile' },
   ];
   return (
-    <nav className='p-5 bg-blue-600 shadow md-flex md:items-center md:justify-between'>
+    <nav className='p-5 bg-slate-600 shadow md-flex md:items-center md:justify-between'>
       <div className='flex items-center justify-between'>
         <div className='text-white font-semibold text-2xl cursor-pointer z-10'>
           Logo
@@ -28,7 +28,7 @@ const Navbar = () => {
           )}
         </span>
         <ul
-          className={`md:flex md:items-center z-[1] md:z-auto md:static absolute bg-blue-600 w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-4 md:opacity-100 opacity-0 ${
+          className={`md:flex md:items-center z-[1] md:z-auto md:static absolute bg-slate-600 w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-4 md:opacity-100 opacity-0 ${
             isNavOpen ? 'top-[-400px]' : 'top-[50px] opacity-100'
           } transition-all ease-in duration-500`}
           id='navLinks'

@@ -56,6 +56,9 @@ export default {
           'Noto Color Emoji',
         ],
       },
+      screens: {
+        xs: '340px',
+      },
     },
   },
   plugins: [],

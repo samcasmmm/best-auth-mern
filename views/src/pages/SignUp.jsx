@@ -1,5 +1,24 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 const SignUp = () => {
+  const [userInputData, setUserInputData] = useState({
+    username: '',
+    email: '',
+    password: '',
+  });
+  const handleChange = (e) => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    setUserInputData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleOnSubmit = async (e) => {
+    e.preventDefault();
+    console.log(userInputData);
+  };
   return (
     <div className='flex items-center justify-center min-h-[86.7vh]  bg-gray-800'>
       <div className='border shadow-xs rounded-md border-gray-600 md:p-3 md:w-6/12 w-full p-4 m-4'>
@@ -11,7 +30,7 @@ const SignUp = () => {
           HTTP- only cookie. It also uses Redux Toolkit and the React Bootstrap
           library
         </p>
-        <form className='space-y-4 md:space-y-6 mt-3' action='#'>
+        <form className='space-y-4 md:space-y-6 mt-3' onSubmit={handleOnSubmit}>
           <div>
             <label
               htmlFor='username'
@@ -26,6 +45,8 @@ const SignUp = () => {
               className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
               placeholder='username'
               required=''
+              value={userInputData.username}
+              onChange={(e) => handleChange(e)}
             />
           </div>
           <div>
@@ -42,6 +63,8 @@ const SignUp = () => {
               className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
               placeholder='name@email.com'
               required=''
+              value={userInputData.email}
+              onChange={(e) => handleChange(e)}
             />
           </div>
           <div>
@@ -58,6 +81,8 @@ const SignUp = () => {
               placeholder='••••••••'
               className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
               required=''
+              value={userInputData.password}
+              onChange={(e) => handleChange(e)}
             />
           </div>
 

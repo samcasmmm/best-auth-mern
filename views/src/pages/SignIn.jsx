@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 const SignIn = () => {
   return (
     <div className='flex items-center justify-center min-h-[86.7vh]  bg-gray-800'>
-      <div className='border shadow-xs rounded-md border-stale-600 p-3 w-6/12'>
+      <div className='border shadow-xs rounded-md border-gray-600 md:p-3 md:w-6/12 w-full p-4 m-4'>
         <h3 className='text-center mb-4 font-bold text-lg text-blue-600'>
           MERN Authentication
         </h3>
@@ -57,7 +57,7 @@ const SignIn = () => {
               to='/sign-up'
               className='font-medium text-primary-600 hover:underline dark:text-primary-500'
             >
-              Sign Up here
+              Register here
             </Link>
           </p>
         </form>

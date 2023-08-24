@@ -1,11 +1,18 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  setCredentials,
+  logout,
+  selectUserInfo,
+} from '../app/features/auth/authSlice';
 const SignUp = () => {
   const [userInputData, setUserInputData] = useState({
     username: '',
     email: '',
     password: '',
   });
+  const userInfo = useSelector(selectUserInfo);
   const handleChange = (e) => {
     e.preventDefault();
     const { name, value } = e.target;
@@ -18,6 +25,7 @@ const SignUp = () => {
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     console.log(userInputData);
+    console.log(userInfo);
   };
   return (
     <div className='flex items-center justify-center min-h-[86.7vh]  bg-gray-800'>

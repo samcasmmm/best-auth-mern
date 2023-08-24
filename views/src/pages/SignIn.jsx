@@ -1,10 +1,27 @@
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLoginMutation } from '../app/features/auth/userApiSlice';
+import { setCredentials, selectUserInfo } from '../app/features/auth/authSlice';
+import { Toaster, toast } from 'react-hot-toast';
 const SignIn = () => {
   const [userInputData, setUserInputData] = useState({
     email: '',
     password: '',
   });
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [login, { isLoading }] = useLoginMutation();
+  const userInfo = useSelector(selectUserInfo);
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate('/');
+    }
+  }, [navigate, userInfo]);
+
   const handleChange = (e) => {
     e.preventDefault();
     const { name, value } = e.target;
@@ -16,10 +33,20 @@ const SignIn = () => {
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const res = await login(userInputData).unwrap();
+      dispatch(setCredentials({ ...res }));
+      // navigate('/');
+      toast.success('Successfully !');
+    } catch (err) {
+      toast.error(`${err?.data.message} !}`);
+      console.log(err?.message || err);
+    }
     console.log(userInputData);
   };
   return (
     <div className='flex items-center justify-center min-h-[86.7vh]  bg-gray-800'>
+      <Toaster position='top-center' reverseOrder={false} />
       <div className='border shadow-xs rounded-md border-gray-600 md:p-3 md:w-6/12 w-full p-4 m-4'>
         <h3 className='text-center mb-4 font-bold text-lg text-blue-600'>
           MERN Authentication
@@ -42,8 +69,6 @@ const SignIn = () => {
               name='email'
               id='email'
               className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-              placeholder='name@company.com'
-              required=''
               value={userInputData.email}
               onChange={(e) => {
                 handleChange(e);
@@ -61,9 +86,7 @@ const SignIn = () => {
               type='password'
               name='password'
               id='password'
-              placeholder='••••••••'
               className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-              required=''
               value={userInputData.password}
               onChange={(e) => {
                 handleChange(e);

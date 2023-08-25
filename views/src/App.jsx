@@ -7,6 +7,7 @@ import About from './pages/About';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Profile from './pages/Profile';
+import PrivateRoute from './utils/PrivateRoute';
 import { faviconSetter } from './utils/DetectTheme';
 import { Toaster, toast } from 'react-hot-toast';
 
@@ -24,7 +25,9 @@ function App() {
           <Route path='/about' element={<About />} />
           <Route path='/sign-in' element={<SignIn />} />
           <Route path='/sign-up' element={<SignUp />} />
-          <Route path='/profile' element={<Profile />} />
+          <Route path='' element={<PrivateRoute />}>
+            <Route path='/profile' element={<Profile />} />
+          </Route>
           <Route path='*' element={<h1>404</h1>} />
         </Route>
       </Routes>

@@ -7,6 +7,7 @@ import {
   logout,
   selectUserInfo,
 } from '../app/features/auth/authSlice';
+import Button from '../components/Button';
 import { toast } from 'react-hot-toast';
 
 const SignUp = () => {

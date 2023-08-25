@@ -1,15 +1,40 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useLogoutMutation } from '../app/features/auth/userApiSlice';
+import { selectUserInfo, logout } from '../app/features/auth/authSlice';
+import { toast } from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
+
 const Navbar = () => {
   const [isNavOpen, setIsNavOpen] = useState(true);
+  const dispatch = useDispatch();
+  const userInfo = useSelector(selectUserInfo);
+  const navigate = useNavigate();
+  const [logoutApiCall] = useLogoutMutation();
   const links = [
     { id: 0, title: 'Home', path: '/' },
     { id: 1, title: 'About', path: 'about' },
     { id: 2, title: 'SignIn', path: '/sign-in' },
     { id: 3, title: 'SignUp', path: '/sign-up' },
     { id: 4, title: 'Profile', path: '/profile' },
-    { id: 5, title: 'Logout', path: '/' },
   ];
+
+  const handleLogout = async () => {
+    setIsNavOpen(!isNavOpen);
+    try {
+      await logoutApiCall().unwrap();
+      dispatch(logout());
+      toast.success('Logout Successfully');
+      navigate('/');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const filteredLinks = userInfo
+    ? links.filter((link) => link.title !== 'SignIn' && link.title !== 'SignUp')
+    : links.filter((link) => link.title !== 'Profile');
+
   return (
     <nav className='p-5 bg-slate-600 shadow md-flex md:items-center md:justify-between'>
       <div className='flex items-center justify-between'>
@@ -34,7 +59,7 @@ const Navbar = () => {
           } transition-all ease-in duration-500`}
           id='navLinks'
         >
-          {links.map((link) => (
+          {filteredLinks.map((link) => (
             <li
               key={link.id}
               className='mx-2 my-2 md:my-0 cursor-pointer'
@@ -48,6 +73,19 @@ const Navbar = () => {
               </Link>
             </li>
           ))}
+          {userInfo && (
+            <li
+              className='mx-2 my-2 md:my-0 cursor-pointer'
+              onClick={() => handleLogout()}
+            >
+              <Link
+                to='/'
+                className='text-slate-300 text-lg hover:text-white duration-500'
+              >
+                Logout
+              </Link>
+            </li>
+          )}
         </ul>
       </div>
     </nav>

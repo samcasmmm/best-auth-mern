@@ -20,7 +20,7 @@ const SignIn = () => {
     if (userInfo) {
       navigate('/');
     }
-  }, [navigate, userInfo]);
+  }, [userInfo]);
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -36,17 +36,15 @@ const SignIn = () => {
     try {
       const res = await login(userInputData).unwrap();
       dispatch(setCredentials({ ...res }));
-      // navigate('/');
       toast.success('Successfully !');
+      navigate('/');
     } catch (err) {
       toast.error(`${err?.data.message} !}`);
       console.log(err?.message || err);
     }
-    console.log(userInputData);
   };
   return (
     <div className='flex items-center justify-center min-h-[86.7vh]  bg-gray-800'>
-      <Toaster position='top-center' reverseOrder={false} />
       <div className='border shadow-xs rounded-md border-gray-600 md:p-3 md:w-6/12 w-full p-4 m-4'>
         <h3 className='text-center mb-4 font-bold text-lg text-blue-600'>
           MERN Authentication

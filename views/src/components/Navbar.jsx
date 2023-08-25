@@ -34,7 +34,11 @@ const Navbar = () => {
           id='navLinks'
         >
           {links.map((link) => (
-            <li key={link.id} className='mx-2 my-2 md:my-0 cursor-pointer'>
+            <li
+              key={link.id}
+              className='mx-2 my-2 md:my-0 cursor-pointer'
+              onClick={() => setIsNavOpen(!isNavOpen)}
+            >
               <Link
                 to={link.path}
                 className='text-slate-300 text-lg hover:text-white duration-500'

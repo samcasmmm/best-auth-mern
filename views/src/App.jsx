@@ -8,6 +8,7 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Profile from './pages/Profile';
 import { faviconSetter } from './utils/DetectTheme';
+import { Toaster, toast } from 'react-hot-toast';
 
 function App() {
   useEffect(() => {
@@ -16,6 +17,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <Toaster position='top-center' reverseOrder={false} />
       <Routes>
         <Route path='/' element={<Layout />}>
           <Route index element={<Home />} />

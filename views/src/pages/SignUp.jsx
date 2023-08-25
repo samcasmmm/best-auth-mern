@@ -1,11 +1,14 @@
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useSignupMutation } from '../app/features/auth/userApiSlice';
 import {
   setCredentials,
   logout,
   selectUserInfo,
 } from '../app/features/auth/authSlice';
+import { toast } from 'react-hot-toast';
+
 const SignUp = () => {
   const [userInputData, setUserInputData] = useState({
     username: '',
@@ -13,6 +16,16 @@ const SignUp = () => {
     password: '',
   });
   const userInfo = useSelector(selectUserInfo);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [signup, { isLoading }] = useSignupMutation();
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate('/');
+    }
+  }, [userInfo]);
+
   const handleChange = (e) => {
     e.preventDefault();
     const { name, value } = e.target;
@@ -24,8 +37,15 @@ const SignUp = () => {
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
-    console.log(userInputData);
-    console.log(userInfo);
+    try {
+      const res = await signup(userInputData).unwrap();
+      dispatch(setCredentials({ ...res }));
+      toast.success('Successfully !');
+      navigate('/');
+    } catch (err) {
+      toast.error(`${err?.data.message} !`);
+      console.log(err?.message || err);
+    }
   };
   return (
     <div className='flex items-center justify-center min-h-[86.7vh]  bg-gray-800'>

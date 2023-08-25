@@ -39,9 +39,9 @@ const registerUser = asyncHandler(async (req, res, next) => {
       status: 'Bad request',
     });
   }
-  if (password.length <= 5) {
-    return res.status(401).json({
-      message: 'password must be more than 5 charactor',
+  if (password.length < 5) {
+    return res.status(400).json({
+      message: 'password must be 5',
       status: 'User Bad request',
     });
   }

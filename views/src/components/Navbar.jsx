@@ -8,6 +8,7 @@ const Navbar = () => {
     { id: 2, title: 'SignIn', path: '/sign-in' },
     { id: 3, title: 'SignUp', path: '/sign-up' },
     { id: 4, title: 'Profile', path: '/profile' },
+    { id: 5, title: 'Logout', path: '/' },
   ];
   return (
     <nav className='p-5 bg-slate-600 shadow md-flex md:items-center md:justify-between'>

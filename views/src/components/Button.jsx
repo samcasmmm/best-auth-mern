@@ -21,7 +21,7 @@ const LoadingView = () => {
 };
 
 Button.defaultProps = {
-  title: 'Button',
+  title: 'Button-Text',
   isLoading: false,
 };
 

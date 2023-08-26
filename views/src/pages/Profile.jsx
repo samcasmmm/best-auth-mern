@@ -23,8 +23,8 @@ const Profile = () => {
 
   useEffect(() => {
     setUserInputData((prev) => ({
-      username: '',
-      email: '',
+      username: userInfo?.user?.username,
+      email: userInfo?.user?.email,
       password: '',
     }));
   }, []);

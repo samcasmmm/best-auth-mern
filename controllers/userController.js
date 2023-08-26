@@ -88,6 +88,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
 // ? @access -  Private
 const updateUserProfile = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user._id);
+  console.log(user);
   if (user) {
     user.username = req.body.username || user.username;
     user.email = req.body.email || user.email;
@@ -102,13 +103,32 @@ const updateUserProfile = asyncHandler(async (req, res, next) => {
       user: updatedUser,
     });
   } else {
-    res.status(404);
-    next({
+    return res.status(404).json({
       message: 'User not found',
       status: 404,
     });
   }
-  res.status(200).json({ message: 'Update User' });
+});
+
+// ? @desc   -  get all user
+// ? route   -  GET /api/users/
+// ? @access -  Private
+
+const getAllUsers = asyncHandler(async (req, res, next) => {
+  try {
+    const users = await User.find().select('-password');
+
+    res.status(200).json({
+      message: 'Users fetched successfully',
+      status: 'success',
+      users: users,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: 'An error occurred while fetching users',
+      status: 'error',
+    });
+  }
 });
 
 export {
@@ -117,4 +137,5 @@ export {
   logoutUser,
   getUserProfile,
   updateUserProfile,
+  getAllUsers,
 };

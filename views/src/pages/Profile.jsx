@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useSignupMutation } from '../app/features/auth/userApiSlice';
+import { useUpdateMutation } from '../app/features/auth/userApiSlice';
 import {
   setCredentials,
   logout,
@@ -19,7 +19,7 @@ const Profile = () => {
   const userInfo = useSelector(selectUserInfo);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [signup, { isLoading }] = useSignupMutation();
+  const [update, { isLoading }] = useUpdateMutation();
 
   useEffect(() => {
     setUserInputData((prev) => ({
@@ -41,7 +41,12 @@ const Profile = () => {
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await signup(userInputData).unwrap();
+      const res = await update({
+        _id: userInfo.user._id,
+        username: userInputData.username,
+        email: userInputData.email,
+        password: userInputData.password,
+      }).unwrap();
       dispatch(setCredentials({ ...res }));
       toast.success('Successfully !');
       navigate('/');

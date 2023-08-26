@@ -2,8 +2,15 @@ import Card from '../components/Card';
 import { ProductsData } from './../data/ProductData';
 import { useSelector } from 'react-redux';
 import { selectUserInfo } from '../app/features/auth/authSlice';
+import { useEffect } from 'react';
 const Home = () => {
   const userInfo = useSelector(selectUserInfo);
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  });
   if (!userInfo) {
     return (
       <div div className='flex items-center justify-center min-h-[85vh]'>

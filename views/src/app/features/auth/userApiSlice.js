@@ -1,5 +1,5 @@
 import { apiSlice } from '../../apiSlice';
-const USER_URL = '/api/v2/users';
+const USER_URL = 'https://best-auth-mern.vercel.app/api/v2/users';
 
 export const userApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({

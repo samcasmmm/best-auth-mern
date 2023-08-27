@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://best-auth-mern.vercel.app',
+        target: 'https://best-auth-mern.vercel.app/',
         changeOrigin: true,
       },
     },

@@ -2,7 +2,7 @@
  MERN (MongoDB, Express.js, React, Node.js) Authentication project, designed following industry best practices and utilizing JSON Web Tokens (JWT) for secure user authentication.
  simple app for login and signup
  
-Setting up the Backend
+## Setting up the Backend
 Project Initialization and Dependency Installation:
 
 Initialize a Node.js project using npm init or yarn init.
